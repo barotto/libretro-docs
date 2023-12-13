@@ -532,9 +532,11 @@ A common mistake made by shaders is that they aren't careful enough about sampli
 
 There are three major cases to consider:
 
+|||
+|-|-|
 | Bilinear sampling               | If bilinear is used, it is always safe to sample a texture. |
-| Nearest, with integer scale     | If the OutputSize / InputSize is integer, the interpolated vTexCoord will always fall inside the texel safely, so no special precautions have to be used. For very particular shaders which rely on nearest neighbor sampling, using integer scale to a framebuffer and upscaling that with more stable upscaling filters like bicubic for example is usually a great choice.
-| Nearest, with non-integer scale | Sometimes, it is necessary to upscale images to the backbuffer which have an arbitrary size. Bilinear is not always good enough here, so we must deal with a complicated case.
+| Nearest, with integer scale     | If the OutputSize / InputSize is integer, the interpolated vTexCoord will always fall inside the texel safely, so no special precautions have to be used. For very particular shaders which rely on nearest neighbor sampling, using integer scale to a framebuffer and upscaling that with more stable upscaling filters like bicubic for example is usually a great choice. |
+| Nearest, with non-integer scale | Sometimes, it is necessary to upscale images to the backbuffer which have an arbitrary size. Bilinear is not always good enough here, so we must deal with a complicated case. |
 
 If we interpolate `vTexCoord` over a frame with non-integer scale, it is possible that we end up just between two texels. Nearest neighbor will have to find a texel which is nearest, but there is no clear "nearest" texel. In this scenario, we end up having lots of failure cases which are typically observed as weird glitches in the image which change based on the resolution.
 
